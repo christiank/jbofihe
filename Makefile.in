@@ -200,7 +200,7 @@ canonluj.inc:
 
 clean:
 	-(cd dfasyn && make clean)
-	-rm *.output *.tab.c *_tab.c rpc_full.c *.o \
+	-rm -f *.output *.tab.c *_tab.c rpc_full.c *.o \
         jbofihe cmafihe smujajgau vlatai jvocuhadju \
         *.dict uncom.c uncom.o uncom \
         morf_lex.c morfvlex.c morf_enc.c morf*_dfa.c \

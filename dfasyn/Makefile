@@ -30,5 +30,5 @@ scan.c : scan.l
 scan.o : scan.c parse.h n2d.h
 
 clean:
-	rm dfasyn *.o scan.c parse.c parse.h parse.output
+	rm -f dfasyn *.o scan.c parse.c parse.h parse.output
 
