@@ -22,6 +22,8 @@
 #include <proplist.h>
 #endif
 
+#include "cJSON.h"
+
 #define new_string(s) strcpy((char *) malloc(1+strlen(s)), (s))
 #define extend_string(s, x) strcat((char *) realloc(s, 1+strlen(s)+strlen(x)), x)
 #define new(T) (T *) malloc(sizeof(T))
@@ -32,7 +34,8 @@
 typedef enum {
   OF_LATEX,
   OF_TEXT,
-  OF_TEXTBLK
+  OF_TEXTBLK,
+  OF_JSON
 #ifdef PLIST
   ,OF_PLIST
 #endif

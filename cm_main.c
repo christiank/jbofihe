@@ -34,6 +34,8 @@ main (int argc, char **argv)
       ofmt = OF_LATEX;
     } else if (!strcmp(*argv, "-b")) {
       ofmt = OF_TEXTBLK;
+    } else if (!strcmp(*argv, "-j")) {
+      ofmt = OF_JSON;
 #ifdef PLIST
     } else if (!strcmp(*argv, "-p")) {
       ofmt = OF_PLIST;
@@ -49,6 +51,7 @@ main (int argc, char **argv)
                       "usage: cmafihe [-b [-w WIDTH] | -p | -l | -v] [FILENAME]\n"
                       "no options : output inline ascii\n"
                       "-b         : output blocked ascii with optional WIDTH, default %i\n"
+                      "-j         : output JSON document\n"
                       "-l         : output blocked latex code\n"
 #ifdef PLIST
                       "-p         : output GNUStep property list with vocabulary\n"

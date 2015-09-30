@@ -25,6 +25,8 @@ int width;
 static proplist_t dictionary = NULL;
 #endif
 
+static cJSON *json_ary = NULL;
+
 static char lines[3][BUFFER_SIZE];
 static int width_used;
 
@@ -111,6 +113,9 @@ start_output(void)
       lines[0][0] = lines[1][0] = lines[2][0] = 0;
       width_used = 0;
       break;
+    case OF_JSON:
+      json_ary = cJSON_CreateArray();
+      break;
 #ifdef PLIST
   case OF_PLIST:
       dictionary = PLMakeDictionaryFromEntries(NULL, NULL, NULL);
@@ -133,6 +138,9 @@ end_output(void)
       break;
     case OF_TEXTBLK:
       block_newline();
+      break;
+    case OF_JSON:
+      printf("%s", cJSON_PrintUnformatted(json_ary));
       break;
 #ifdef PLIST
     case OF_PLIST:
@@ -168,6 +176,9 @@ output(const char *lojban, const char *trans, const char *selmao)
     case OF_TEXTBLK:
       do_block(lojban, selmao, trans);
       break;
+    case OF_JSON:
+      cJSON_AddItemToArray(json_ary, cJSON_CreateString(trans));
+      break;
 #ifdef PLIST
     case OF_PLIST:      
       dictionary = PLInsertDictionaryEntry(dictionary, PLMakeString(lojban), PLMakeString(trans));
@@ -184,7 +195,8 @@ output_newline(void)
     case OF_LATEX:
     printf("\n\n");
       break;
-    case OF_TEXT:
+    case OF_TEXT: /* FALLTHROUGH */
+    case OF_JSON:
     printf("\n");
       break;
     case OF_TEXTBLK:
@@ -210,6 +222,9 @@ output_paren(const char *text)
       do_block("(", "(", "(");
       do_block(text, "", "");
       do_block(")", ")", ")");
+      break;
+    case OF_JSON:
+      /* XXX IMPLEMENTME */
       break;
   }
 }
