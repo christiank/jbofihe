@@ -160,6 +160,8 @@ end_output(void)
 void
 output(const char *lojban, const char *trans, const char *selmao)
 {
+  cJSON *obj = NULL;
+
   switch (ofmt) { 
     case OF_LATEX:
       printf ("\\begin{tabular}[t]{l}"
@@ -177,7 +179,11 @@ output(const char *lojban, const char *trans, const char *selmao)
       do_block(lojban, selmao, trans);
       break;
     case OF_JSON:
-      cJSON_AddItemToArray(json_ary, cJSON_CreateString(trans));
+      obj = cJSON_CreateObject();
+      cJSON_AddStringToObject(obj, "lojban", lojban);
+      cJSON_AddStringToObject(obj, "selma'o", selmao);
+      cJSON_AddStringToObject(obj, "gloss", trans);
+      cJSON_AddItemToArray(json_ary, obj);
       break;
 #ifdef PLIST
     case OF_PLIST:      
@@ -224,7 +230,7 @@ output_paren(const char *text)
       do_block(")", ")", ")");
       break;
     case OF_JSON:
-      /* XXX IMPLEMENTME */
+      /* IGNORED */
       break;
   }
 }
